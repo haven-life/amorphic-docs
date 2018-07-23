@@ -1,3 +1,1 @@
-Documentation for Amorphic
-
-A WORK IN PROGRESS
+[Documentation for Amorphic](https://haven-life.github.io/amorphic-docs/)

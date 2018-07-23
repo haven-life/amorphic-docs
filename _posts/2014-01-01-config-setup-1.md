@@ -19,43 +19,49 @@ The ticket demo has some ready examples of complex relationships in the model so
     npm install amorphic
 
 Amorphic is based on connect middleware. It creates a connect applicaiton and listens on it.  All you need in your app.js is to call amorphic:
- 
-    require('amorphic').listen(__dirname, sessionStore, preSessionCallback, postSessionCallback);
-    
+
+    let rootDirectory = __dirname;
+    require('amorphic').listen(rootDirectory, sessionStore, preSessionCallback, postSessionCallback);
+
 Parameters are:
 
-* **root directory** which should always be __dirname
-* **sessionStore** a session store object which defaults to MemoryStore
-* **preSessionCallback** a call back that passes in the app object returned from connect() before any .use events are attached.  This is where any special requirements for static files or other requests that don't need the bodyParser or sessions can be attached via .use
-* **postSessionCallback** a call back that passes in the app object returned from connect() after app.session() and the body parser have been called such that requests that require session can be attached.
+* `rootDirectory` (string) - which should always be __dirname
+* `sessionStore` - a session store object which defaults to MemoryStore
+* `preSessionCallback` (function) - a callback that passes in the connect handler returned from `connect()` **before** any `.use` events are attached.  This is where any special requirements for static files or other requests that don't need the `bodyParser` or sessions can be attached via `.use`
+* `postSessionCallback` (function) - a callback that passes in the connect handler returned from `connect()` after `app.session()` and the body parser have been called such that requests that require the session can be attached.
 
-Note that **preSessionCallback** and **postSessionCallback** not normally needed in an Amorphic application because communication with the server is typically handled by object model methods declared live on the server.  This communication is handled automatically.
+Note that `preSessionCallback` and `postSessionCallback` are not required in an Amorphic application because communication with the server is typically handled by object model methods declared live on the server.  This communication is handled automatically.
 
 ### Global config.json
 
-In the root of your project there is a **config.json** file which represents the "global" configuration for all applications:
+In the root of your project there is a `config.json` file which represents the "global" configuration for all applications:
 
-* **conflictMode** - Whether to data synchronization vs only message synchronization is enabled.  Defaults to 'soft'.  Every data value transmitted when synchronizing between the browser and server is sent in two parts - the expected current value and the new value.  If the expected current value is incorrect a warning is generated (conflictMode 'soft') or an error is generated (conflictMode 'hard')
+* `applications` <span style="color: red">required</span> - list your applications and their root directories here
 
-* **compressSession** if set to true session data is compressd before being serialized.  This makes storage smaller but adds time to each server call
+* `application` <span style="color: red">required</span> - the default application
 
-* **compressXHR** if set to true the server responses are compressed
+* `conflictMode` - Whether to data synchronization vs only message synchronization is enabled.  Defaults to `'soft'`.  Every data value transmitted when synchronizing between the browser and server is sent in two parts - the expected current value and the new value.  If the expected current value is incorrect a warning is generated (conflictMode 'soft') or an error is generated (conflictMode 'hard')
 
-* **sourceMode** Whether source files are to minified 'prod' or left as is 'debug'
+* `compressSession` (boolean) - if set to true session data is compressed before being serialized.  This makes storage smaller but adds time to each server call
 
-* **templateMode** When set to 'auto' templates are defined in a fashion where circular references are handles automatically.
+* `compressXHR` (boolean) - if set to true the server responses are compressed
 
-* **port** - the port you want to listen on
+* `sourceMode` (string)
+    * `'prod'` - source files served to the client are minified
+    * `'debug'` - source files served to the client are not minified
+    * `'webpack'` - amorphic will not serve source files to the client
 
-* **sessionSeconds** - how long before a session expires (in seconds)
+* `templateMode` (string)
+    * `'auto'` - circular references are handled by the framework with this option
+    * `'typescript'` - framework will process javascript templates that are compiled from typescript
 
-* **objectCacheSeconds** - how long to keep your objects cached
+* `port` (number) - the port you want to listen on
 
-* **sessionSecret** - a random string for hashing sessions
+* `sessionSeconds` (number) - how long before a session expires (in seconds)
 
-* **applications** - list your applications and their root directories here
+* `objectCacheSeconds` (number) - how long to keep your objects cached
 
-* **application** - the default application
+* `sessionSecret` (string) - a random string for hashing sessions
 
 Anything you specify in config.json can also be specified as a starting parameter to node.js
 

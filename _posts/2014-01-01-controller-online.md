@@ -64,6 +64,7 @@ When you call a method that is declared to live on the server from the browser a
 
         myObject.save({cascade: true})
         return myObject.end()
+
 * **server: changes packaged and returned ** - Any data changed on the server is packaged up and sent back to the browser as the payload for the server call.
 
 * **browser: process changes & return ** - When the server call returns the changes are applied and the browser returns to code that called the server

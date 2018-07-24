@@ -20,15 +20,36 @@ The ticket demo has some ready examples of complex relationships in the model so
 
 Amorphic is based on connect middleware. It creates a connect applicaiton and listens on it.  All you need in your app.js is to call amorphic:
 
+    {% highlight javascript %}
     let rootDirectory = __dirname;
     require('amorphic').listen(rootDirectory, sessionStore, preSessionCallback, postSessionCallback);
+    {% endhighlight %}
 
 Parameters are:
 
 * `rootDirectory` (string) - which should always be __dirname
 * `sessionStore` - a session store object which defaults to MemoryStore
 * `preSessionCallback` (function) - a callback that passes in the connect handler returned from `connect()` **before** any `.use` events are attached.  This is where any special requirements for static files or other requests that don't need the `bodyParser` or sessions can be attached via `.use`
+
+    {% highlight javascript %}
+    function preSessionInject(app) {
+        app.use(function(req, res, next) {
+            // do work here
+            next();
+        })
+    }
+    {% endhighlight %}
+
 * `postSessionCallback` (function) - a callback that passes in the connect handler returned from `connect()` after `app.session()` and the body parser have been called such that requests that require the session can be attached.
+
+    {% highlight javascript %}
+    function postSessionInject(app) {
+        app.use(function(req, res, next) {
+            // do work here
+            next();
+        })
+    }
+    {% endhighlight %}
 
 Note that `preSessionCallback` and `postSessionCallback` are not required in an Amorphic application because communication with the server is typically handled by object model methods declared live on the server.  This communication is handled automatically.
 
@@ -68,6 +89,7 @@ Anything you specify in config.json can also be specified as a starting paramete
 
 Example:
 
+    {% highlight JSON %}
     {
         "port": 3001,
         "sessionSeconds" : 3600,
@@ -76,4 +98,4 @@ Example:
         "applications" : {"ticket": "apps/ticket"},
         "application"  : "ticket"
     }
-
+    {% endhighlight %}

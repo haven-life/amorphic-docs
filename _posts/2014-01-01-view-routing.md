@@ -24,7 +24,7 @@ Each path can have these properties
 * enter - a function executed when the route is invoked.  It is passed the route itself which contains these properties of interest:
     * getId - function that returns the id of the route independent of the path
     * getPath - function that returns the path of the route
-    * Any user property included in the route definition 
+    * Any user property included in the route definition
 * exit - a runction execute when a new route is invoked
 * path - let's you override the default url path portion which defaults to #property, which is useful for a single page application
     * /xxx means replace href
@@ -35,16 +35,16 @@ Each path can have these properties
     * -\/\#xxx means use bookmark and replace URL using pushState if possible
 * nested - indicates that the route is nested and the previous route is restored by router.popRoute()
 
-You can also define any other properties.  Since the route object is a tree your own properties are 
+You can also define any other properties.  Since the route object is a tree your own properties are
 inherited as you move down the tree.  This lets you define properties that apply to a whole section of
 a tree.  The enter and exit properties also are inherited but are cumulative so that if you specify
 an enter/exit function it will get executed prior to any lower level enter/exit functions.  The
-enter/exit functions are called with the node of the hierarchy as a parameter 
+enter/exit functions are called with the node of the hierarchy as a parameter
 
 search properties are also objects which have these properties
 * bind - a property in your bindster context that will map to a url search parameter
 * toURL - true if url is to be updated when the bind element changes
-* fromURL - true if the property is to be bound 
+* fromURL - true if the property is to be bound
 
 The router has these functions:
 * route(routedefinition) - establish routes, returns the top level route in the heirarchy
@@ -53,6 +53,7 @@ The router has these functions:
 
 Here is a sample:
 
+    {% highlight javascript %}
     var main = router.route(controller,
     {
         enter: function (route) {
@@ -107,20 +108,24 @@ Here is a sample:
             }
         }
     });
+    {% endhighlight %}
 
 The route itself is a function and the routes returned from router.route are in the same heirarchy so you can navigigate
 there like this
 
+    {% highlight javascript %}
     main.user.profile.email();
+    {% endhighlight %}
 
 That first enter property is inherited by all routes and will set the file property to the file name property
 and the className to the className of the route.  The className in this example is inherited from the user and
-admin levels of the tree.  
+admin levels of the tree.
 
 This means that with Bindster you can use this to dynamically include the page file you need.
 
+    {% highlight html %}
      <div b:class="{className}">
         <b:include urlbind="{file}">
      </div>
- 
+    {% endhighlight %}
 

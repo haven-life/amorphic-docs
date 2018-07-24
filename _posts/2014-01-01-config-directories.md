@@ -86,6 +86,7 @@ Of course you may use sub-folders to organize your templates.
 
 You must have a controller file which would look something like this:
 
+    {% highlight javascript %}
     // Controller.js
     module.exports.Controller = function (objectTemplate, uses)
         var Model = uses('model.js', 'Model');
@@ -95,6 +96,7 @@ You must have a controller file which would look something like this:
             clientInit: function () {this.model = new Model()}
         });
     }
+    {% endhighlight %}
 
 Templates  are structured such that Amorphic can "include" them on both the server and browsers. The structure has these elements:
 
@@ -112,6 +114,7 @@ This structure allows each session to have it's own private set of templates ins
 
 Prior to version 1.4 of Amorphic `templateMode: 'auto'` was not supported and a different way of handling circular references was used.  In legacy mode you must return an object with a reference to each template you created in that file.  Within a template file circular references were handled using `objectTemplate.mixin`:
 
+    {% highlight javascript %}
     // foobar.js
     module.exports.foobar = function (objectTemplate, getTemplate) {
         var Foo = objectTemplate.create("Foo", {
@@ -128,9 +131,11 @@ Prior to version 1.4 of Amorphic `templateMode: 'auto'` was not supported and a 
             Bar: Bar
         }
     }
+    {% endhighlight %}
 
 Because your model may grow later and end up with circular references an alternative is to use mixins for everything.
 
+    {% highlight javascript %}
     // foobar.js
     module.exports.foobar = function (objectTemplate, getTemplate) {
         var Foo = objectTemplate.create("Foo", {});
@@ -147,6 +152,7 @@ Because your model may grow later and end up with circular references an alterna
             Bar: Bar
         }
     }
+    {% endhighlight %}
 
 Mixins deal with circular references in a single file but what if you have circular references across files?
 
@@ -157,7 +163,7 @@ Amorphic provides a solution in the form of a two-pass processing of template fi
 
 This allows you to reference any templates defined in the first pass.
 
-
+    {% highlight javascript %}
     // foo.js
     module.exports.foo = function (objectTemplate, getTemplate)
     {
@@ -186,7 +192,7 @@ This allows you to reference any templates defined in the first pass.
             foo: Foo,
         }
     }
-
+    {% endhighlight %}
 
 ### Including server files
 

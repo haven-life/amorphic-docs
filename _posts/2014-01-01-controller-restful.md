@@ -10,6 +10,7 @@ order: 2
 
 You can execute RESTful code using the daemons.  In that case you simply listen for incoming calls from within the `serverInit` method. On each call you would need to update the database using Persistence calls.  No state is maintained between calls.  If you need state you need to manage it on your own.  Here is a sample that uses Restify:
 
+    {% highlight javascript %}
     module.exports.controller = function (objectTemplate, getTemplate)
     {
         var BaseController = getTemplate('./baseController.js').BaseController;
@@ -34,4 +35,4 @@ You can execute RESTful code using the daemons.  In that case you simply listen 
 
         return {Controller: Controller};
     }
-
+    {% endhighlight %}

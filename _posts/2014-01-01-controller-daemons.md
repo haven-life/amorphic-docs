@@ -16,6 +16,7 @@ Your controller will be created immediately upon startup and the serverInit func
 
 When `templateMode` is set to `'typescript'`:
 
+    {% highlight javascript %}
     import {supertypeClass} from 'amorphic';
 
     @supertypeClass
@@ -27,9 +28,11 @@ When `templateMode` is set to `'typescript'`:
             console.log('Place your batch task here');
         }
     }
+    {% endhighlight %}
 
 When `templateMode` is **not** set to `'typescript'`:
 
+    {% highlight javascript %}
      module.exports.controller = function (objectTemplate, getTemplate)
      {
         var BaseController = getTemplate('./baseController.js').BaseController;
@@ -47,6 +50,7 @@ When `templateMode` is **not** set to `'typescript'`:
 
          return {Controller: Controller};
      }
+     {% endhighlight %}
 
  You can also listen on any port at this point but you don't have access to the main server that is listening for http requests from the browser.
 

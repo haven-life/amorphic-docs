@@ -6,31 +6,31 @@ date: 2013-06-06 08:55:36
 order: 2
 ---
 
-# Web API
+## Web API
 
 In daemon mode (beta), you can add your own http endpoints to amorphic's internal server object.
 
 On server startup, amorphic will look in your project directory
-for an index file where you can export all of your application's routes. Routes to us
-means functionality that gets triggered only given a request pattern
+for an index file where you can export all of your application's routes, functionality that only gets triggered given a specific request pattern
 e.g. URL structure or http request type (get, post, put, etc.).
 
-    ${project_name}> apps > ${application_name} > js > routers > index.js
+    ${project_name} > apps > ${application_name} > js > routers > index.js
 
 The same pattern applies to defining middlewares, functionality that gets triggered on _any_
 request to your endpoints. Common examples of middlewares include capturing request metrics like request
- resolution time and size of payload. The declaration of middlewares in an amorphic app follows the
+ resolution time and payload size. The declaration of middlewares in an amorphic app follows the
  route definition pattern.
 
-    ${project_name}> apps > ${application_name} > js > middlwares > index.js
+    ${project_name} > apps > ${application_name} > js > middlewares > index.js
 
-### Example
+### Example Endpoint
 
- Let's set up an example endpoint. We want to define the functionality that's supposed to get triggered,
- and the http url structure reponsible for triggering it. These functions should expect to receive an instance of an
+ Below is an example of setting up a route where we want to define some functionality along with
+  the url structure reponsible for triggering it. These router functions should expect to receive an instance of an
 express router object, add the routes, and return the updated router.
 
-    function firstEndpoint(expressRouter) {
+    {% highlight javascript %}
+    function exampleEndpoint(expressRouter) {
         expressRouter.get('/example', exampleService);
 
         return expressRouter;
@@ -41,15 +41,36 @@ express router object, add the routes, and return the updated router.
     }
 
     module.exports = {
-        firstEndpoint: firstEndpoint,
+        exampleEndpoint: exampleEndpoint,
     };
+    {% endhighlight %}
 
-NOTE: In this above example, all of the application's endpoints and functionality
+### Example Middleware
+
+A similar pattern applies to setting up middlewares. In this example, we're imposing a request body size limit of
+10 megabytes to all requests coming in.
+
+    {% highlight javascript %}
+    let express = require('express');
+
+    function exampleMiddleware(expressRouter) {
+        expressRouter.use(express.json({
+            limit: '10mb'
+        }));
+
+        return expressRouter;
+    }
+
+    module.exports = {
+        exampleMiddleware: exampleMiddleware
+    };
+    {% endhighlight %}
+
+NOTE: In the above examples, all of the application's endpoints and functionality
  are implemented within the index file. If your application is any larger than POC scale, you should
 logically separate out your functionality into different files and import them
-into the index file. This way you can organize your code in a way that makes sense
-for your application, while the index file serves as an entrypoint.
+into the index file. This way you can organize code in a way that makes sense
+for your application.
 
-On each call you would need to update the database using Persistence calls.
-
-No state is maintained between calls. If you need state you need to manage it on your own.
+Also, on each call you will need to update the database as no state is maintained between server calls.
+If you need state, you will need to manage it on your own.

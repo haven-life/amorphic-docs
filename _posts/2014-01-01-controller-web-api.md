@@ -8,16 +8,17 @@ order: 2
 
 ## Web API
 
-In daemon mode (beta), you can add your own http endpoints to amorphic's internal server object.
+In the beta version of daemon mode, you can add your own http endpoints to amorphic's internal server object.
 
 On server startup, amorphic will look in your project directory
-for an index file where you can export all of your application's routes, functionality that only gets triggered given a specific request pattern
-e.g. URL structure or http request type (get, post, put, etc.).
+for an index file where you can export all of your application's routes (functionality that only gets triggered given a specific request pattern).
+
+The location in which amorphic will look for this file is outlined below.
 
     ${project_name} > apps > ${application_name} > js > routers > index.js
 
-The same pattern applies to defining middlewares, functionality that gets triggered on _any_
-request to your endpoints. Common examples of middlewares include capturing request metrics like request
+The same pattern applies to defining middlewares (functionality that gets triggered on _any_
+request) for your endpoints. Common examples of middlewares include capturing request metrics like request
  resolution time and payload size. The declaration of middlewares in an amorphic app follows the
  route definition pattern.
 

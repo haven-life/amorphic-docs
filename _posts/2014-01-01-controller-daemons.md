@@ -2,7 +2,6 @@
 layout: page
 title: "Batch Applications (Daemon Mode)"
 category: controller
-date: 2013-06-06 08:55:36
 order: 1
 ---
 
@@ -38,9 +37,9 @@ When `templateMode` is **not** set to `'typescript'`:
 
         Controller = BaseController.extend({
             serverInit: function () {
-                setInterval(function () {
+                setInterval(() => {
                     this.doBatchTask();
-                }.bind(this), 5000);
+                }, 5000);
              },
              interval: function () {
                  console.log("I'm a batch task");

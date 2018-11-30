@@ -2,13 +2,12 @@
 layout: page
 title: "Web API Applications"
 category: controller
-date: 2013-06-06 08:55:36
 order: 2
 ---
 
 ## Web API
 
-In the beta version of daemon mode, you can add your own http endpoints to amorphic's internal server object.
+In daemon mode, you can add your own http endpoints to amorphic's internal server object.
 
 On server startup, amorphic will look in your project directory
 for an index file where you can export all of your application's routes (functionality that only gets triggered given a specific request pattern).

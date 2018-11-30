@@ -41,7 +41,7 @@ When `templateMode` is **not** set to `'typescript'`:
                     this.doBatchTask();
                 }, 5000);
              },
-             interval: function () {
+             doBatchTask: function () {
                  console.log("I'm a batch task");
              }
          });

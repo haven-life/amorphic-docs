@@ -50,7 +50,7 @@ When you call a method that is declared to live on the server from the browser a
 
 * **browser: changes queued** - Amorphic looks at all of your data (that is your controller and all object refrenced by the controller recursively) to determine if anything has changed since the last call to code on the server.  These changes are packaged up.
 
-* **browser: request queued*** - The server method is packaged up and queued in the browser.  If no call was in progress the request is immediately sent to the server.  Otherwise the next element of the queue is removed when the server returns from the call.
+* **browser: request queued** - The server method is packaged up and queued in the browser.  If no call was in progress the request is immediately sent to the server.  Otherwise the next element of the queue is removed when the server returns from the call.
 
 * **server: preServerCall** - If you have a **preServerCall** method in the controller, that method is called **before** any data is synchronized from the browser.  This gives you a chance to see if any data is stale (e.g. updated in the database by another session) and to refresh it.  Normally you would begin a Persistor transaction such that anything explicitly saved would be saved as part of a transaction:
 
